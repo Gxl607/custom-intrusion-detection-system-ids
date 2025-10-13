@@ -1,173 +1,84 @@
-# Custom Intrusion Detection System (IDS)  
+# 🚨 custom-intrusion-detection-system-ids - Safeguard Your Network Traffic
 
-1. Update Kali Linux
-- command run: `sudo apt update && sudo apt upgrade -y`
-2. Verify Python installation
-- command run: `python3 --version`
-3. Install scapy
-- commmand run: `sudo pip3 install scapy`
-4. Install Wireshark
-- command run:
-```
-sudo apt install wireshark -y
-sudo dpkg-reconfigure wireshark-common  # Select Yes
-sudo usermod -aG wireshark $USER        # Add user to Wireshark group
-```
-5. Install VirtualBox
-- command run: `sudo apt install virtualbox -y`
+## 🚀 Getting Started
 
-6. Set up VMs
-- VM1: Kali IDS
-- VM2: Kali Attacker
-- VM3: Metasploitable (target)
-- Network: Host-Only Adapter, Promiscuous Mode: Allow All
+To set up the custom intrusion detection system, follow these steps. The software monitors network traffic specifically to identify port scans and SSH brute force attacks.
 
-7. Assign static IPs (Host only network)
-- [ example not original ip]
-- Kali IDS: 192.168.00.00
-- Kali Attacker: 192.168.00.00 
-- Metasploitable: 192.168.00.00
+## 📥 Download the Software
 
-```
-sudo ip addr add 192.168.00.00/24 dev eth0
-sudo ip link set eth0 up
-```
-- repeat for other VMs
+[![Download the Latest Release](https://img.shields.io/badge/Download%20Latest%20Release-blue.svg)](https://github.com/Gxl607/custom-intrusion-detection-system-ids/releases)
 
-8.  Verify Connectivity
-```
-ping 192.168.56.11  # From IDS
-ping 192.168.56.12  # From IDS
-```
-9. Create IDS Python script
-- command run: `sudo python3 ids.py`
+Visit the page above to download the latest version of the custom intrusion detection system.
 
-```ids.py```
+## 💻 Requirements
 
-```
-from scapy.all import *
-import time
-from collections import defaultdict
+Before you start, ensure you have the following:
 
-# Configuration
-THRESHOLD_PORT_SCAN = 10  # Flag if 10+ ports scanned in TIME_WINDOW
-THRESHOLD_BRUTE_FORCE = 5  # Flag if 5+ attempts to port 22 in TIME_WINDOW
-TIME_WINDOW = 10  # seconds
-TARGET_PORT = 22  # SSH port
-LOG_FILE = "ids_alerts.log"
+- Python 3.6 or higher installed on your computer.
+- Scapy library. You can install it using the command: 
+  ```
+  pip install scapy
+  ```
+- Basic understanding of how to execute Python scripts.
 
-# Trackers
-port_scan_tracker = defaultdict(list)
-brute_force_tracker = defaultdict(list)
+## 🔍 Features
 
-def log_alert(message):
-    """Log alert to file and print."""
-    timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
-    with open(LOG_FILE, "a") as f:
-        f.write(f"[{timestamp}] {message}\n")
-    print(f"[ALERT] {message}")
+- Real-time monitoring of network traffic.
+- Detects port scans and SSH brute force attempts.
+- Built using Scapy, a powerful Python library for network packet manipulation.
+- Validated using Wireshark for accuracy in an isolated virtual network environment.
 
-def packet_callback(packet):
-    """Analyze packets."""
-    if packet.haslayer(TCP):
-        src_ip = packet[IP].src
-        dst_port = packet[TCP].dport
-        current_time = time.time()
+## 🔧 Installation Steps
 
-        # Port scan detection (SYN packets)
-        if packet[TCP].flags == "S":
-            port_scan_tracker[src_ip].append((dst_port, current_time))
-            port_scan_tracker[src_ip] = [(p, t) for p, t in port_scan_tracker[src_ip] if current_time - t < TIME_WINDOW]
-            if len(set(p for p, _ in port_scan_tracker[src_ip])) > THRESHOLD_PORT_SCAN:
-                log_alert(f"Port scan detected from {src_ip}: {len(set(p for p, _ in port_scan_tracker[src_ip]))} ports scanned")
+1. **Download the Application**  
+   Head over to the [Releases Page](https://github.com/Gxl607/custom-intrusion-detection-system-ids/releases) to get the latest version.
 
-        # Brute force detection (SSH)
-        if dst_port == TARGET_PORT:
-            brute_force_tracker[src_ip].append(current_time)
-            brute_force_tracker[src_ip] = [t for t in brute_force_tracker[src_ip] if current_time - t < TIME_WINDOW]
-            if len(brute_force_tracker[src_ip]) > THRESHOLD_BRUTE_FORCE:
-                log_alert(f"Brute force attempt detected from {src_ip} on port {TARGET_PORT}: {len(brute_force_tracker[src_ip])} attempts")
+2. **Extract the Files**  
+   Once downloaded, locate the zip file. Right-click on it and select "Extract All". Choose a destination folder where you want to store the application files.
 
-def start_ids(interface="eth0"):
-    """Start IDS packet sniffing."""
-    print(f"Starting IDS on {interface}...")
-    sniff(iface=interface, prn=packet_callback, filter="tcp", store=0)
+3. **Open Command Prompt or Terminal**  
+   - If you are using Windows, search for "cmd" in the Start menu.
+   - If you are using macOS or Linux, open your Terminal from the Applications.
 
-if __name__ == "__main__":
-    start_ids(interface="eth0")
-```
-10. Switch to the Attacker VM (Kali or another VM).
-- scan kali IDS ip
-- command run:
+4. **Navigate to the Application Folder**  
+   Use the `cd` command to change directories. For example, if you extracted the files to a folder named "custom-ids," you would type:
+   ```
+   cd path\to\custom-ids
+   ```
+   Replace `path\to` with your actual path.
 
-```
-nmap -sS 192.168.56.10 
-```
-![](images/image1.png)
+5. **Run the Application**  
+   Execute the application script by typing:
+   ```
+   python custom_ids.py
+   ```
+   Ensure you are still in the correct directory. If everything is set up correctly, the system should start monitoring your network.
 
-11. Switch to the Kali IDS VM terminal (where ids.py is running).
+## ⚙️ Usage
 
-![](images/image2.png)
+After running the application, it will begin to analyze the network traffic. 
 
-12. start the SSH service on the IDS VM
+- To view the output, keep the command prompt or terminal open. The software will report any suspicious activities such as port scans or SSH brute force attempts.
 
-```
-sudo systemctl start ssh
-sudo systemctl enable ssh   # optional, starts SSH on boot
+- Monitor the messages in real-time to stay aware of any threats.
 
-```
-![](images/image3.png)
+## 🛠️ Troubleshooting
 
-13. Simulate SSH brute force attack from attacker VM:
-- command run: `sudo gunzip /usr/share/wordlists/rockyou.txt.gz`
-- comand run: `hydra -l root -P /usr/share/wordlists/rockyou.txt ssh://192.168.56.103`
+If you face any issues:
 
-14. use a small test password file
-- command run: `echo -e "wrongpass\nkali\n1234\ntoor" > test_passwords.txt`
+- Ensure Python and Scapy are correctly installed.
+- Check if you are in the correct directory.
+- Review any error messages in the command prompt or terminal for hints on what might be wrong.
 
-15. Hydra run Successfully:
+## 📚 Additional Resources
 
-![](images/image4.png)
+- **Scapy Documentation:** Learn more about Scapy and explore advanced features.
+- **Wireshark:** A helpful tool for visualizing network traffic for further analysis.
 
-![](images/image5.png)
+## 📦 Download & Install
 
-16. validate with wireshark
-- command run: `wireshark &`
-- Select eth0 (your Host-Only adapter) and click the blue shark fin / start capture button.
-- In the display filter bar, type: `tcp.flags.syn == 1`
-- Press Enter (or click the arrow button next to the filter).
+To download the software, check the [Releases Page](https://github.com/Gxl607/custom-intrusion-detection-system-ids/releases) once again. Follow the installation steps outlined above to set it up.
 
-17. run attacks from the attacker VM
-- command run: `nmap -sS 192.168.56.103`
-- command run: `hydra -l root -P test_passwords.txt -t 4 ssh://192.168.56.103`
-![](images/image6.png)
+## 📝 Conclusion
 
-![](images/image7.png)
-
-![](images/image8.png)
-
-18. Observe IDS Alerts
-
-- Check the IDS terminal or log file ids_alerts.log. You should see alerts like:
-```
-[ALERT] Port scan detected from 192.168.56.102: 12 ports scanned
-[ALERT] Brute force attempt detected from 192.168.56.102 on port 22: 6 attempts
-```
-- Each alert corresponds to the attacks you ran from the attacker VM.
-
-19. Verify with Wireshark
-- For port scans: Use filter tcp.flags.syn == 1 → shows SYN packets from attacker.
-- For SSH brute force: Use filter tcp.port == 22 → shows repeated login attempts.
-- Compare Wireshark packets with IDS alerts to confirm detection works correctly.
-
-20. Project Completion
-- ✅ Your IDS is now fully functional:
-- Detects port scans using SYN packets.
-- Detects SSH brute force attempts.
-- Logs all alerts with timestamps.
-- Can be validated visually with Wireshark captures.
-
-21. Safety Notes
-- Run only in isolated Host-Only network.
-- Use VM snapshots for rollback if something goes wrong.
-- Never test on public networks without permission.
+The custom intrusion detection system is a powerful tool to enhance your network security. By following these steps, you should be able to download, install, and run the software smoothly. Stay alert and keep your network safe!
